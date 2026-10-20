@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daten-Dschungel – Informatik Lernspiel</title>
+<style>
+:root{--bg:#f4f1ff;--card:#fff;--ink:#241b4d;--mut:#6b6591;--pri:#7c4dff;--pri2:#ff4d8d;--ok:#12b76a;--bad:#f04438;--gold:#ffb020;--line:#e3dcff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15112b;--card:#201a40;--ink:#f0ecff;--mut:#a9a2d4;--line:#352d63}}
+:root[data-theme="dark"]{--bg:#15112b;--card:#201a40;--ink:#f0ecff;--mut:#a9a2d4;--line:#352d63}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:12px}
+#hd{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border-radius:22px;padding:14px;box-shadow:0 8px 24px #7c4dff44}
+.top{display:flex;align-items:center;gap:10px}.top>div:nth-child(2){flex:1}h1{margin:0;font-size:1.25rem}small{opacity:.85}
+.bot{font-size:2.4rem;animation:bob 2s ease-in-out infinite}.pill{background:#ffffff33;border-radius:99px;padding:4px 12px;font-weight:700;animation:pulse 2.5s infinite}
+.bar{height:12px;background:#ffffff40;border-radius:9px;overflow:hidden;margin:8px 0 2px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffe066,#ffb020);border-radius:9px;transition:width .6s}
+.afb{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;font-size:.78rem}.afb .bar{height:8px}
+.bd{display:flex;gap:6px;margin-top:8px}.b{font-size:1.4rem;filter:grayscale(1);opacity:.35}.b.on{filter:none;opacity:1;animation:pop .6s}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
+nav button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:8px 2px;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+nav button span{display:block;font-size:1.5rem}nav button.on{border-color:var(--pri);background:var(--pri);color:#fff}nav button.on span{animation:bob 1.6s infinite}
+.card,.card2{background:var(--card);border:2px solid var(--line);border-radius:18px;margin:10px 0}.card2{padding:16px}
+.card summary{padding:12px 14px;font-weight:700;cursor:pointer;display:flex;gap:10px;align-items:center;list-style:none}.card summary::-webkit-details-marker{display:none}
+.card summary em{margin-left:auto;font-style:normal;color:var(--ok)}.card.done{border-color:var(--ok)}
+.ic{font-size:1.6rem;display:inline-block;animation:wig 4s infinite}.bodyc{padding:0 14px 14px}.bodyc ul{padding-left:20px;margin:6px 0}
+.mk{background:#fff3c4;color:#5a4300;border-radius:10px;padding:8px 10px;margin:8px 0}
+.btn{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border:0;border-radius:14px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;margin-top:10px}.btn:disabled{opacity:.5}
+.lead{color:var(--mut);font-weight:600}.big{font-size:3.2rem;animation:bob 2s infinite}
+.prog{height:8px;background:var(--line);border-radius:9px;overflow:hidden}.prog i{display:block;height:100%;background:var(--pri);transition:width .4s}
+.meta{display:flex;justify-content:space-between;align-items:center;margin:8px 2px;color:var(--mut);font-weight:600;font-size:.9rem}.chip{background:var(--pri);color:#fff;border-radius:99px;padding:2px 10px}
+.card2 h2{font-size:1.15rem;margin:0 0 12px}.opts{display:grid;gap:8px}
+.opt{text-align:left;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px;font:inherit;cursor:pointer}.opt.ok{background:#d1fadf;border-color:var(--ok);color:#054f31}.opt.no{background:#fee4e2;border-color:var(--bad);color:#7a271a;animation:shake .4s}
+#in{width:100%;padding:12px;font:inherit;font-size:1.2rem;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+.fb{padding:10px;border-radius:12px;margin-top:12px;font-weight:700}.fb.g{background:#d1fadf;color:#054f31}.fb.r{background:#fee4e2;color:#7a271a;animation:shake .4s}
+.sol{background:var(--bg);border-left:4px solid var(--pri);border-radius:8px;padding:10px;margin-top:10px;font-size:.95rem;overflow-x:auto}
+.lamps{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:14px 0}.lamp{border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:6px 0;font:inherit;cursor:pointer}.lamp span{display:block;font-size:1.5rem}.lamp b{font-size:.75rem}.lamp.on{background:#fff3c4;border-color:var(--gold);color:#5a4300;box-shadow:0 0 14px var(--gold)}.lamp.on span{animation:pulse 1s infinite}
+.tg{background:var(--pri);color:#fff;border-radius:10px;padding:0 10px;font-size:1.4rem}.bot2{font-size:3rem;animation:bob 1.5s infinite}
+#toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);transform:translate(-50%,-150%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:14px;font-weight:700;z-index:9;transition:transform .4s}#toast.s{transform:translate(-50%,0)}
+.cf{position:fixed;top:-30px;font-size:1.6rem;z-index:8;pointer-events:none;animation:fall 1.4s ease-in forwards}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-5deg)}}@keyframes pulse{50%{transform:scale(1.08)}}@keyframes pop{0%{transform:scale(.2)}70%{transform:scale(1.4)}}
+@keyframes wig{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-14deg)}97%{transform:rotate(14deg)}}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.2}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body><div class="w">
+<div id="hd"></div><nav id="nv"></nav><main id="main"></main></div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),SH=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const B=(n,l=0)=>n.toString(2).padStart(l,'0'),sub=(s,b=2)=>`<b>${s}</b><sub>${b}</sub>`;
+const LN=['Bit-Neuling','Byte-Lehrling','Code-Knacker','Daten-Detektiv','Binär-Boss','Informatik-Legende'],AN={1:'Wissen',2:'Anwenden',3:'Transfer'},GU=120;
+const BD=[['s5','🔥','5 richtig in Folge'],['pf','💯','Perfekte Runde'],['ca','📚','Alle Lernkarten gelesen'],['gm','🤖','Binär-Roboter freigeschaltet']];
+let S={xp:0,cards:[],st:{1:[0,0],2:[0,0],3:[0,0]},bw:0,bt:0,bd:[]},V='learn',Q=null,Gm={r:0,sc:0};
+try{Object.assign(S,JSON.parse(localStorage.getItem('dd')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('dd',JSON.stringify(S))}catch(e){}};
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('s');setTimeout(()=>e.classList.remove('s'),2600)}
+function boom(){for(let i=0;i<16;i++){const s=document.createElement('span');s.className='cf';s.textContent=['🎉','⭐','✨','💾','1️⃣','0️⃣'][R(0,5)];s.style.left=R(2,95)+'%';s.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),2000)}}
+function bdg(id){if(!S.bd.includes(id)){S.bd.push(id);toast('🏅 Neues Abzeichen: '+BD.find(b=>b[0]==id)[2])}}
+function addXP(n){const o=Math.floor(S.xp/100);S.xp+=n;const l=Math.floor(S.xp/100);if(l>o){toast('🎊 Level '+(l+1)+': '+LN[Math.min(l,5)]);boom()}if(S.xp>=GU)bdg('gm');tabs()}
+function hd(){const l=Math.floor(S.xp/100),p=S.xp%100;$('#hd').innerHTML=`<div class=top><div class=bot>🤖</div><div><h1>Daten-Dschungel</h1><small>Level ${l+1} · ${LN[Math.min(l,5)]}</small></div><div class=pill>⭐ ${S.xp} XP</div></div><div class=bar><i style="width:${p}%"></i></div><small>Noch ${100-p} XP bis Level ${l+2}</small>
+<div class=afb>${[1,2,3].map(a=>{const[c,t]=S.st[a],pc=t?Math.round(c/t*100):0;return`<div><b>AFB ${'I'.repeat(a)}</b> ${AN[a]}<div class=bar><i style="width:${pc}%"></i></div><small>${pc}% richtig</small></div>`}).join('')}</div>
+<div class=bd>${BD.map(b=>`<span class="b ${S.bd.includes(b[0])?'on':''}" title="${b[2]}">${b[1]}</span>`).join('')}</div>`}
+function tabs(){const T=[['learn','🧠','Aneignen'],['rep','🔁','Wiederholen'],['train','🎯','Trainieren'],['game',S.xp>=GU?'🤖':'🔒','Spiel']];$('#nv').innerHTML=T.map(t=>`<button class="${V==t[0]?'on':''}" onclick="go('${t[0]}')"><span>${t[1]}</span>${t[2]}</button>`).join('');hd()}
+function go(v){V=v;tabs();v=='learn'?learn():v=='game'?game():intro(v)}
+/* ---------- Aneignen ---------- */
+const C=[['🧠','Was ist Informatik?','<ul><li>Wissenschaft davon, wie man <b>Informationen</b> mit Computern <b>speichern, bearbeiten und darstellen</b> kann.</li><li>Sie löst Probleme mit digitalen Lösungen.</li></ul>'],
+['🔍','Daten – Information – Signal','<ul><li><b>Daten</b>: zeichenhafte Darstellung von Fakten, noch ohne Bedeutung (z. B. „35“).</li><li><b>Information</b>: Daten + Zusammenhang (z. B. „noch 35 Minuten Unterricht“).</li><li><b>Signal</b>: physikalische Übertragung von Daten (elektrisch, akustisch, optisch).</li></ul><div class=mk>Merke: Signale transportieren Daten – und wenn wir die Daten verstehen, werden sie zu Informationen.</div>'],
+['📨','Senden und Verstehen','<ul><li><b>Codierung</b> = Darstellungsart des Senders</li><li><b>Medium</b> = womit es übertragen wird</li><li><b>Decodierung</b> = Voraussetzung beim Empfänger</li></ul><ul><li>Fackeltelegraph: Fackeln (optisch), Codetabelle nötig</li><li>Rauchmelder: Sirene (akustisch), Bedeutung kennen</li><li>Liebesbrief: Tinte auf Papier (optisch), lesen und Sprache verstehen</li></ul>'],
+['🔐','Codes im Alltag','<ul><li><b>Brailleschrift</b>: Blindenschrift</li><li><b>Morsecode</b>: z. B. S.O.S</li><li><b>Winkeralphabet</b>: Buchstaben mit Flaggen</li><li><b>Verkehrsschilder (StVO)</b></li><li><b>Barcode</b>: Produkt und Preis erkennen, Warenbestand überwachen</li><li><b>ISBN</b>: Bücher eindeutig identifizieren</li><li><b>QR-Code</b>: Text, Bilder und Daten schnell teilen</li></ul>'],
+['🔢','Dezimal und Binär','<ul><li>Dezimal: Basis 10, Ziffern 0–9, Stellenwerte 1, 10, 100, 1000 …</li><li>Binär (dual): Basis 2, Ziffern 0 und 1, Stellenwerte 1, 2, 4, 8, 16, 32, 64, 128</li><li><b>Bit</b> = kleinste Einheit (0 oder 1), <b>8 Bit = 1 Byte</b></li><li>Strom fließt = 1, Strom fließt nicht = 0</li></ul><div class=mk>11001<sub>2</sub> = 16 + 8 + 0 + 0 + 1 = 25<sub>10</sub></div>'],
+['🔄','Umrechnen und Rechnen','<ul><li><b>Dual → dezimal</b>: Stellenwerte der Einsen addieren.</li><li><b>Dezimal → dual</b>: immer durch 2 teilen, Reste von <b>unten nach oben</b> lesen. Alternative: Wie viele 128er, 64er, 32er … passen hinein?</li><li><b>Addition</b>: 0+0=0, 0+1=1, 1+1=10 (Übertrag 1)</li><li><b>Multiplikation</b>: für jede 1 den Faktor verschoben untereinander schreiben, dann addieren</li></ul>'],
+['💾','Bits, Bytes und ASCII','<ul><li>n Bit = 2<sup>n</sup> Möglichkeiten: 1 Bit → 2, 2 Bit → 4, 3 Bit → 8, 7 Bit → 128, 8 Bit → 256</li><li>Für m Möglichkeiten brauchst du das kleinste n mit 2<sup>n</sup> ≥ m.</li><li>Buchstaben als Byte: A = 01000001 (65), B = 01000010 (66), C = 01000011 (67) …</li></ul>']];
+function learn(){$('#main').innerHTML=`<p class=lead>📚 <span id=cnt>${S.cards.length}</span>/${C.length} Karten gelernt – öffne eine Karte, lies sie und hake sie ab!</p>`+C.map((c,i)=>{const d=S.cards.includes(i);return`<details class="card ${d?'done':''}"><summary><span class=ic>${c[0]}</span>${c[1]}<em>${d?'✔':''}</em></summary><div class=bodyc>${c[2]}<button class=btn onclick="done(${i})" ${d?'disabled':''}>${d?'Gelernt ✔':'Verstanden! +10 XP'}</button></div></details>`}).join('')}
+function done(i){if(S.cards.includes(i))return;S.cards.push(i);const e=document.querySelectorAll('.card')[i];e.classList.add('done');e.querySelector('em').textContent='✔';const b=e.querySelector('button');b.disabled=true;b.textContent='Gelernt ✔';$('#cnt').textContent=S.cards.length;if(S.cards.length==C.length)bdg('ca');addXP(10);boom();save()}
+/* ---------- Aufgaben ---------- */
+const POOL=[
+[1,'Was ist Informatik?','Die Wissenschaft, Informationen mit Computern zu speichern, zu bearbeiten und darzustellen','Die Lehre vom Bau von Computerhardware','Die Wissenschaft von Zahlen und Formen','Das Programmieren von Spielen','Informatik befasst sich mit dem Speichern, Bearbeiten und Darstellen von Informationen durch automatische Systeme.'],
+[1,'Was sind Daten?','Zeichenhafte Darstellungen von Fakten, die noch keine Bedeutung haben','Immer fertige Nachrichten mit Bedeutung','Elektrische Kabel','Programme auf dem Computer','Erst durch Interpretation werden Daten zu Informationen.'],
+[1,'Wann entsteht aus Daten eine Information?','Wenn sie in einem Zusammenhang interpretiert werden','Wenn man sie speichert','Wenn man sie löscht','Wenn man sie ausdruckt','Erst der Zusammenhang gibt den Daten eine Bedeutung.'],
+[1,'Was ist ein Signal?','Eine physikalische Übertragung von Daten','Eine Information mit Bedeutung','Ein Zahlsystem','Ein Programm','Signale (elektrisch, akustisch, optisch) transportieren Daten.'],
+[1,'Wie heißt die kleinste Einheit der Datendarstellung?','Bit','Byte','Pixel','Code','Ein Bit ist 0 oder 1.'],
+[1,'Wie viele Bit sind 1 Byte?','8','4','2','16','Je 8 Bit werden zu 1 Byte zusammengefasst.'],
+[1,'Welche Ziffern gibt es im Binärsystem?','0 und 1','0 bis 9','1 und 2','0, 1 und 2','Das Dualsystem hat die Basis 2 und nur die Ziffern 0 und 1.'],
+[1,'Was sind digitale Daten?','Die computergerechte Form von Informationen','Daten auf Papier','Gesprochene Sprache','Nur Bilder','Digitale Daten entstehen durch binäre Codierung, also eine Folge aus 0 und 1.'],
+[2,'„Noch 35 Minuten Unterricht“ – was ist das?','Eine Information','Nur ein Datum ohne Bedeutung','Ein Signal','Ein Barcode','Die 35 bekommt durch den Zusammenhang eine Bedeutung. Allein ist „35“ nur ein Datum.'],
+[2,'Welches Medium nutzt ein Fackeltelegraph?','Licht (optisch)','Schall (akustisch)','Tinte auf Papier','Strom','Brennende Fackeln werden gesehen, also optisch. Zum Verstehen braucht man eine Codierungstabelle.'],
+[2,'Welcher Code identifiziert Bücher eindeutig?','ISBN-Barcode','QR-Code','Morsecode','Winkeralphabet','Die ISBN kennzeichnet jedes Buch eindeutig.'],
+[2,'Wofür nutzt man einen QR-Code?','Zum schnellen Teilen von Text, Bildern und anderen Daten','Nur für Blindenschrift','Zum Morsen','Für Verkehrsschilder','QR-Codes lassen sich mit der Kamera einlesen.'],
+[2,'Wie heißt die Schrift aus Punkten für blinde Menschen?','Brailleschrift','Morsecode','Winkeralphabet','Barcode','Braille wird mit den Fingern ertastet.'],
+[2,'Warum rechnet ein Computer mit 0 und 1?','Strom fließt = 1, Strom fließt nicht = 0','Weil Computer nur bis 1 zählen können','Weil 0 und 1 schöner aussehen','Weil Dezimalzahlen verboten sind','Zwei Zustände lassen sich technisch sehr einfach unterscheiden.'],
+[2,'Welchen Stellenwert hat die dritte Stelle von rechts im Dualsystem?','4','3','8','2','Von rechts: 1, 2, 4, 8, 16 … (2⁰, 2¹, 2² …).'],
+[3,'Adam schreibt Eva einen Liebesbrief. Was muss Eva können, damit sie die Information versteht?','Sehen, lesen und die Sprache verstehen','Nur hören können','Nur den Brief besitzen','Nichts, Daten sind schon Information','Beim Decodieren braucht der Empfänger die passenden Voraussetzungen.'],
+[3,'Jemand sieht Fackelsignale, kennt aber die Codetabelle nicht. Was hat er erhalten?','Nur Daten, keine Information','Eine Information','Einen Barcode','Ein Bit','Ohne Code fehlt die Interpretation, deshalb entsteht keine Information.'],
+[3,'Wie viele verschiedene Zahlen lassen sich mit 8 Bit codieren?','256','8','16','128','Jedes Bit verdoppelt die Möglichkeiten: 2⁸ = 256 (die Zahlen 0 bis 255).'],
+[3,'Du bekommst ein ausgedrucktes Foto. Was ist zum Interpretieren NICHT nötig?','Strom für den Drucker','Sehen können','Wissen, wer abgebildet ist','Den Zusammenhang kennen','Für ein fertiges Foto braucht man Sehen und Hintergrundwissen, keinen Strom.'],
+[3,'Warum ist „35“ allein keine Information, „35 °C im Schatten“ aber schon?','Erst der Kontext gibt der Zahl eine Bedeutung','Weil „35“ zu klein ist','Weil °C ein Signal ist','Weil man Zahlen nicht speichern kann','Das ist der Unterschied zwischen Daten und Information.']];
+const mc=x=>({afb:x[0],type:'mc',q:x[1],opts:SH(x.slice(2,6)),ans:x[2],sol:'💡 '+x[6]});
+const bits=s=>[...s].map((d,i)=>d=="1"?1<<(s.length-1-i):0).filter(x=>x).join(' + ');
+const G={
+b2d(){const n=R(4,8),v=R(1<<(n-1),(1<<n)-1),s=B(v),w=[...s].map((_,i)=>1<<(n-1-i));return{afb:1,num:1,q:`Wandle ${sub(s)} ins Dezimalsystem um.`,ans:v,sol:`💡 Stellenwerte: ${w.join(' | ')}<br>${[...s].map((d,i)=>d+'⋅'+w[i]).join(' + ')}<br>= ${[...s].map((d,i)=>d*w[i]).join(' + ')} = <b>${v}</b>`}},
+d2b(){const v=R(10,200);let n=v,L=[];while(n>0){L.push(`${n} : 2 = ${n>>1} Rest <b>${n&1}</b>`);n>>=1}return{afb:2,num:1,q:`Wandle ${sub(v,10)} ins Dualsystem um.`,ans:B(v),sol:`💡 Immer durch 2 teilen, Rest notieren:<br>${L.join('<br>')}<br>Reste von <b>unten nach oben</b> lesen: <b>${B(v)}</b><sub>2</sub><br>Probe: ${bits(B(v))} = ${v}`}},
+asc(){const k=R(0,25),c=String.fromCharCode(65+k),code=B(65+k,8);if(Math.random()<.5)return{afb:2,q:`Im ASCII-Code ist A = 01000001. Welcher Buchstabe ist ${sub(code)}?`,ans:c,sol:`💡 ${code} = ${bits(code)} = ${65+k}<br>A hat 65 → ${65+k} − 65 = ${k} Schritte weiter im Alphabet → <b>${c}</b>`};return{afb:2,num:1,q:`Im ASCII-Code ist A = 01000001. Schreibe „${c}“ als 8-Bit-Code.`,ans:code,sol:`💡 ${c} ist der ${k+1}. Buchstabe → 65 + ${k} = ${65+k}<br>${65+k} = ${bits(code)} → <b>${code}</b>`}},
+add(){const a=R(5,15),b=R(5,15),x=B(a),y=B(b),L=Math.max(x.length,y.length),p=x.padStart(L,'0'),q=y.padStart(L,'0');let c=0,T=[];for(let i=L-1;i>=0;i--){const s=+p[i]+ +q[i]+c;T.push(`Stelle ${L-i}: ${p[i]}+${q[i]}${c?'+Übertrag 1':''} = ${s} → schreibe <b>${s%2}</b>${s>1?', Übertrag 1':''}`);c=s>>1}if(c)T.push('Am Ende bleibt Übertrag 1 → schreibe <b>1</b> vorne');return{afb:2,num:1,q:`Rechne im Dualsystem: ${sub(x)} + ${sub(y)} = ?`,ans:B(a+b),sol:`💡 Von rechts nach links (1 + 1 = 10, das heißt Übertrag!):<br>${T.join('<br>')}<br>Probe: ${a} + ${b} = ${a+b} ✔`}},
+mul(){const a=R(5,15),b=R(3,7),x=B(a),y=B(b),P=[];[...y].reverse().forEach((d,i)=>{if(d=='1')P.push(x+'0'.repeat(i))});return{afb:3,num:1,q:`Rechne im Dualsystem: ${sub(x)} ⋅ ${sub(y)} = ?`,ans:B(a*b),sol:`💡 Für jede 1 in ${y} schreibst du ${x} auf, jeweils eine Stelle weiter nach links verschoben:<br>${P.join('<br>+ ')}<br>Summe (mit Übertrag addieren) = <b>${B(a*b)}</b><br>Probe: ${a} ⋅ ${b} = ${a*b} ✔`}},
+poss(){const n=[2,3,4,5,6,7,8,10][R(0,7)];return{afb:2,num:1,q:`Wie viele verschiedene Werte kann man mit ${n} Bit darstellen?`,ans:2**n,sol:`💡 Jedes Bit verdoppelt die Möglichkeiten:<br>${Array(n).fill(2).join(' ⋅ ')} = 2<sup>${n}</sup> = <b>${2**n}</b>`}},
+bits(){const m=[12,20,100,500,1000,10000,1000000][R(0,6)],n=Math.ceil(Math.log2(m));return{afb:3,num:1,q:`Wie viele Bit braucht man mindestens für ${m.toLocaleString('de-DE')} Möglichkeiten?`,ans:n,sol:`💡 Gesucht: kleinstes n mit 2<sup>n</sup> ≥ ${m}<br>2<sup>${n-1}</sup> = ${2**(n-1)} ist zu klein, 2<sup>${n}</sup> = ${2**n} reicht → <b>${n} Bit</b>`}},
+b3(){const d=[R(1,2),R(0,2),R(0,2)],v=d[0]*9+d[1]*3+d[2];return{afb:3,num:1,q:`Zusatz: Wandle ${sub(d.join(''),3)} (3er-System) ins Dezimalsystem um.`,ans:v,sol:`💡 Stellenwerte im 3er-System: 9 | 3 | 1<br>${d[0]}⋅9 + ${d[1]}⋅3 + ${d[2]}⋅1 = ${d[0]*9} + ${d[1]*3} + ${d[2]} = <b>${v}</b>`}}};
+function intro(m){const r=m=='rep';$('#main').innerHTML=`<div class=card2 style="text-align:center"><div class=big>${r?'🔁':'🎯'}</div><h2>${r?'Wiederholen':'Trainieren'}</h2><p>${r?'8 Fragen zu Begriffen, Codes und Zusammenhängen aus allen drei Anforderungsbereichen.':'10 Rechenaufgaben (binär ↔ dezimal, Addition, Multiplikation, Bits, ASCII). Nach jeder Aufgabe siehst du den Lösungsweg.'}</p><p>Dein Bestwert: <b>${r?S.bw:S.bt}%</b></p><button class=btn onclick="start('${m}')">Los geht’s!</button></div>`}
+function start(m){let t;if(m=='rep'){const p=SH(POOL),f=a=>p.filter(x=>x[0]==a);t=[...f(1).slice(0,3),...f(2).slice(0,3),...f(3).slice(0,2)].map(mc)}else t=['b2d','b2d','d2b','d2b','asc','add','poss','bits','mul','b3'].map(k=>G[k]()).sort((a,b)=>a.afb-b.afb);Q={mode:m,t,i:0,r:[],ans:0,str:0};show()}
+function show(){const k=Q.t[Q.i];if(!k)return fin();$('#main').innerHTML=`<div class=prog><i style="width:${Q.i/Q.t.length*100}%"></i></div><div class=meta><span>Aufgabe ${Q.i+1}/${Q.t.length}</span><span class=chip>AFB ${'I'.repeat(k.afb)}</span><span>🔥 ${Q.str}</span></div><div class=card2><h2>${k.q}</h2>${k.type=='mc'?`<div class=opts>${k.opts.map((o,j)=>`<button class=opt onclick="chk(${j})">${o}</button>`).join('')}</div>`:`<input id=in autocomplete=off autocapitalize=characters inputmode="${k.num?'numeric':'text'}" placeholder="Deine Antwort"><button class=btn onclick="chk()">Prüfen</button>`}<div id=fb></div></div>`;const i=$('#in');if(i)i.addEventListener('keydown',e=>e.key=='Enter'&&chk())}
+function chk(j){if(Q.ans)return;const k=Q.t[Q.i],mcq=k.type=='mc',v=mcq?k.opts[j]:$('#in').value;if(!String(v).trim())return;const nm=s=>String(s).replace(/\s/g,'').toUpperCase().replace(/^0+(?=.)/,''),ok=nm(v)==nm(k.ans),xp=k.afb==3?15:10;Q.ans=1;Q.r.push({k,v,ok});S.st[k.afb][1]++;
+if(ok){S.st[k.afb][0]++;Q.str++;addXP(xp);if(Q.str==5)bdg('s5');boom()}else Q.str=0;
+if(mcq)document.querySelectorAll('.opt').forEach((b,x)=>{b.disabled=1;if(k.opts[x]==k.ans)b.classList.add('ok');else if(x==j)b.classList.add('no')});else $('#in').disabled=1;
+$('#fb').innerHTML=`<div class="fb ${ok?'g':'r'}">${ok?'✅ Richtig! +'+xp+' XP':'❌ Nicht ganz. Richtig ist: '+k.ans}</div><div class=sol>${k.sol}</div><button class=btn onclick="nx()">${Q.i+1<Q.t.length?'Weiter ➜':'Ergebnis 🏁'}</button>`;save();hd()}
+function nx(){Q.i++;Q.ans=0;show()}
+function fin(){const n=Q.r.filter(x=>x.ok).length,tot=Q.r.length,pc=Math.round(n/tot*100),key=Q.mode=='rep'?'bw':'bt';if(pc>S[key])S[key]=pc;if(n==tot){bdg('pf');addXP(20)}boom();save();hd();
+$('#main').innerHTML=`<div class=card2 style="text-align:center"><div class=big>${pc==100?'🏆':pc>=70?'🎉':'💪'}</div><h2>${n} von ${tot} richtig (${pc}%)</h2><p>${pc==100?'Perfekt! +20 Bonus-XP':pc>=70?'Stark, fast perfekt!':'Jeder Fehler ist ein Lernschritt. Schau dir unten die Lösungswege an.'}</p><p>Bestwert: <b>${S[key]}%</b></p><button class=btn onclick="start('${Q.mode}')">🔄 Neue Aufgaben</button></div><h3>Alle Aufgaben mit Lösungsweg</h3>`+Q.r.map((x,i)=>`<details class=card ${x.ok?'':'open'}><summary><span class=ic>${x.ok?'✅':'❌'}</span><span>${i+1}. ${x.k.q}</span></summary><div class=bodyc>Deine Antwort: <b>${x.v}</b> · Richtig: <b>${x.k.ans}</b><div class=sol>${x.k.sol}</div></div></details>`).join('')}
+/* ---------- Spiel: Binär-Roboter ---------- */
+function game(){if(S.xp<GU){$('#main').innerHTML=`<div class=card2 style="text-align:center"><div class=big>🔒</div><h2>Binär-Roboter</h2><p>Sammle noch <b>${GU-S.xp} XP</b>, um das Spiel freizuschalten. Du verdienst sie mit Lernkarten und richtigen Antworten!</p><div class=prog><i style="width:${S.xp/GU*100}%"></i></div></div>`;return}if(!Gm.r)gnew();else gdraw()}
+function gnew(){Gm={r:0,sc:0};gnr()}
+function gnr(){Gm.r++;Gm.tg=R(1,Gm.r<3?31:255);Gm.b=Array(8).fill(0);Gm.bad=0;gdraw()}
+const gv=()=>Gm.b.reduce((s,x,i)=>s+x*(128>>i),0);
+function gdraw(){if(Gm.r>5){$('#main').innerHTML=`<div class=card2 style="text-align:center"><div class=big>🏆</div><h2>Roboter fertig programmiert!</h2><p>Du hast <b>${Gm.sc} Bonus-XP</b> gesammelt.</p><button class=btn onclick="gnew()">🔄 Nochmal spielen</button></div>`;return}
+$('#main').innerHTML=`<div class=card2 style="text-align:center"><div class=bot2>🤖</div><h2>Runde ${Gm.r}/5: Schalte die Zahl <span class=tg>${Gm.tg}</span> ein!</h2><p>Tippe die Lampen an. Jede Lampe zeigt ihren Stellenwert.</p><div class=lamps>${Gm.b.map((x,i)=>`<button class="lamp ${x?'on':''}" onclick="gtg(${i})"><span>${x?'💡':'⚫'}</span><b>${128>>i}</b></button>`).join('')}</div><p>Dein Wert: <b>${gv()}</b> · Binär: <b>${Gm.b.join('')}</b></p><button class=btn onclick="gck()">Prüfen</button><div id=gf></div></div>`}
+function gtg(i){Gm.b[i]^=1;gdraw()}
+function gck(){const v=gv();if(v==Gm.tg){const p=Gm.bad?3:8;Gm.sc+=p;addXP(p);boom();$('#gf').innerHTML=`<div class="fb g">✅ Richtig! +${p} XP</div><div class=sol>${bits(B(v))} = ${v}</div><button class=btn onclick="gnx()">${Gm.r<5?'Nächste Runde ➜':'Fertig 🏁'}</button>`}
+else{Gm.bad++;let t=`❌ Dein Wert ist ${v}, das ist zu ${v>Gm.tg?'groß':'klein'}. Versuch es nochmal!`;if(Gm.bad>=2)t+=`<div class=sol>💡 Lösung: ${bits(B(Gm.tg))} = ${Gm.tg} → ${B(Gm.tg,8)}</div>`;$('#gf').innerHTML=`<div class="fb r">${t}</div>`}}
+function gnx(){if(Gm.r>=5){Gm.r=6;gdraw()}else gnr()}
+tabs();go('learn');
+</script></body></html>
